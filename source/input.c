@@ -1,6 +1,8 @@
 /** @file input.c Documented input module.
- *
- * Julien Lesgourgues, 27.08.2010
+ * Best version as of Jul19 6:16pm
+   for an input constant G, still E-6 difference in Background.dat and Cl.dat from original
+   *change*, along with input.h and commom.h
+* Julien Lesgourgues, 27.08.2010
  */
 
 #include "input.h"
@@ -62,6 +64,7 @@ int input_init_from_arguments(
   fc_precision.size = 0;
   input_file[0]='\0';
   precision_file[0]='\0';
+
 
   /** - If some arguments are passed, identify eventually some 'xxx.ini'
       and 'xxx.pre' files, and store their name. */
@@ -554,6 +557,8 @@ int input_read_parameters(
   sigma_B = 2. * pow(_PI_,5) * pow(_k_B_,4) / 15. / pow(_h_P_,3) / pow(_c_,2);
 
   /** - set all parameters (input and precision) to default values */
+    
+  class_read_double("G_var",_G_);
 
   class_call(input_default_params(pba,
                                   pth,
@@ -563,7 +568,8 @@ int input_read_parameters(
                                   psp,
                                   pnl,
                                   ple,
-                                  pop),
+                                  pop,
+                                  ppr),
              errmsg,
              errmsg);
 
@@ -598,6 +604,10 @@ int input_read_parameters(
   }
 
   /** (a) background parameters */
+  
+  /** - Gravitation constant */
+  
+  //class_read_double("G_var",_G_);
 
   /** - scale factor today (arbitrary) */
   class_read_double("a_today",pba->a_today);
@@ -2547,6 +2557,8 @@ int input_read_parameters(
   /** (h) all precision parameters */
 
   /** - (h.1.) parameters related to the background */
+  /** - Gravitation constant */
+  //class_read_double("G_var",_G_);
 
   class_read_double("a_ini_over_a_today_default",ppr->a_ini_over_a_today_default);
   class_read_double("back_integration_stepsize",ppr->back_integration_stepsize);
@@ -2918,7 +2930,9 @@ int input_default_params(
                          struct spectra *psp,
                          struct nonlinear * pnl,
                          struct lensing *ple,
-                         struct output *pop
+                         struct output *pop,
+                         struct precision * ppr
+                      
                          ) {
 
   double sigma_B; /* Stefan-Boltzmann constant in \f$ W/m^2/K^4 = Kg/K^4/s^3 \f$*/
@@ -2943,7 +2957,7 @@ int input_default_params(
      0.67556. Hence, we take h=0.67556, N_ur=3.046, N_ncdm=0, and all
      other parameters from the Planck2013 Cosmological Parameter
      paper. */
-
+  //*ptr_G= 6.67428e-11;
   pba->h = 0.67556;
   pba->H0 = pba->h * 1.e5 / _c_;
   pba->T_cmb = 2.7255;
@@ -3248,6 +3262,7 @@ int input_default_precision ( struct precision * ppr ) {
   /** Initialize presicion parameters for different structures:
    * - parameters related to the background
    */
+  //ppr->G_var = 6.67428e-11;
 
   ppr->a_ini_over_a_today_default = 1.e-14;
   ppr->back_integration_stepsize = 7.e-3;
