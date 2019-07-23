@@ -1,5 +1,5 @@
 /** @file input.h Documented includes for input module */
-
+// *change*
 #ifndef __INPUT__
 #define __INPUT__
 
@@ -218,7 +218,8 @@ extern "C" {
 			   struct spectra *psp,
 			   struct nonlinear *pnl,
 			   struct lensing *ple,
-			   struct output *pop
+			   struct output *pop,
+               struct precision *ppr
 			   );
 
   int input_default_precision(

@@ -1,5 +1,5 @@
 /** @file common.h Generic libraries, parameters and functions used in the whole code. */
-
+// *change*
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
@@ -60,6 +60,7 @@ typedef char FileName[_FILENAMESIZE_];
 
 #define _DELIMITER_ "\t" /**< character used for delimiting titles in the title strings */
 
+#define _G_ ppr->G_var
 
 
 #ifndef __CLASSDIR__
@@ -348,6 +349,9 @@ struct precision
   /** @name - parameters related to the background */
   //@{
 
+    
+  // add gravitation constant
+    double G_var;
   /**
    * default initial value of scale factor in background integration, in
    * units of scale factor today
